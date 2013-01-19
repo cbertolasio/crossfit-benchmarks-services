@@ -16,12 +16,14 @@ namespace CrossfitBenchmarks.Services
     {
         protected void Application_Start()
         {
+            AutomapBootstrap.Initialize();
             AreaRegistration.RegisterAllAreas();
-
+            
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
+
 }

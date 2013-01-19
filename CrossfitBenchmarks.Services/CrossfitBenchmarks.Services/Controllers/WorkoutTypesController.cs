@@ -5,44 +5,24 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CrossfitBenchmarks.Data;
+using CrossfitBenchmarks.Data.DataTransfer;
 using CrossfitBenchmarks.Data.Persistance;
+using AutoMapper;
 
 namespace CrossfitBenchmarks.Services.Controllers
 {
     public class WorkoutTypesController : ApiController
     {
-        private readonly IWorkoutTypesRepository workoutTypes;
+        private readonly IWorkoutTypesRepository workoutTypesRepo;
         
-        // GET api/workouttypes
-        public IEnumerable<WorkoutType> Get()
+        public IEnumerable<WorkoutTypeDto> Get()
         {
-            return workoutTypes.GetAll();
+            return  Mapper.Map<IEnumerable<WorkoutTypeDto>>(workoutTypesRepo.GetAll());
         }
 
-        // GET api/workouttypes/5
-        public string Get(int id)
+        public WorkoutTypesController(IWorkoutTypesRepository workoutTypesRepo)
         {
-            return "value";
-        }
-
-        // POST api/workouttypes
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/workouttypes/5
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/workouttypes/5
-        public void Delete(int id)
-        {
-        }
-
-        public WorkoutTypesController(IWorkoutTypesRepository workoutTypes)
-        {
-            this.workoutTypes = workoutTypes;
+            this.workoutTypesRepo = workoutTypesRepo;
         }
     }
 }
