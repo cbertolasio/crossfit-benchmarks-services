@@ -22,6 +22,7 @@ namespace CrossfitBenchmarks.Services.Modules
             Bind<DbContext>().ToMethod(ctx => ctx.Kernel.Get<CrossfitBenchmarksEntities1>());
 
             Bind<IWorkoutTypesRepository>().To<WorkoutTypesRepository>();
+            Bind<IWorkoutLogRepository>().To<WorkoutLogRepository>();
         }
 
         public DataAccessModule()

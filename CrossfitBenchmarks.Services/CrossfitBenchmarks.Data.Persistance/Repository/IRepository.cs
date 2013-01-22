@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace CrossfitBenchmarks.Data.Persistance
 {
-    public interface IUnitOfWork
+    public interface IRepository<T>
     {
-        void Commit();
-    }
+        IEnumerable<T> GetAll();
 
-    public class UnitOfWork
-    {
+        T Find(params object[] keyValues);
     }
 }
+

@@ -178,6 +178,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AutomapBootstrap.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TheBenchmarksController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\WorkoutTypesController.cs" />
     <Compile Include="Global.asax.cs">

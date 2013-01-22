@@ -61,7 +61,14 @@
       <DependentUpon>CrossfitBenchmarksModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\CrossfitBenchmarksEntities1.cs" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\IWorkoutLogRepository.cs" />
+    <Compile Include="Repository\IWorkoutTypesRepository.cs" />
+    <Compile Include="Repository\RepositoryBase.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
+    <Compile Include="Repository\WorkoutLogRepository.cs" />
+    <Compile Include="Repository\WorkoutTypesRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

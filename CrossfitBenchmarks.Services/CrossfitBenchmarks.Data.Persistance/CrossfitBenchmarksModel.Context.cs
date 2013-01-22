@@ -23,9 +23,10 @@ namespace CrossfitBenchmarks.Data.Persistance
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //throw new UnintentionalCodeFirstException();
+            throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<User> Users { get; set; }
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<WorkoutLog> WorkoutLogs { get; set; }
         public DbSet<WorkoutType> WorkoutTypes { get; set; }

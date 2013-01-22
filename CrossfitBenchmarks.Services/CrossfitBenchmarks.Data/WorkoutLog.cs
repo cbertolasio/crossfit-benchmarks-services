@@ -16,12 +16,12 @@ namespace CrossfitBenchmarks.Data
     {
         public long WorkoutLogId { get; set; }
         public int WorkoutId { get; set; }
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public string Score { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
-        public Nullable<System.DateTimeOffset> DateTimeOffset { get; set; }
+        public Nullable<System.DateTimeOffset> DateCreated { get; set; }
         public bool IsAPersonalRecord { get; set; }
     
+        public virtual User User { get; set; }
         public virtual Workout Workout { get; set; }
     }
 }
