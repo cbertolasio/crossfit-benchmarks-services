@@ -17,7 +17,19 @@ namespace CrossfitBenchmarks.Data.Persistance
                 // remove existing PRs
                 var userId = Int32.Parse(dataToSave.UserId);
                 var existingPr = dbSet.Where(it => it.IsAPersonalRecord == true && it.UserId == userId && it.WorkoutId == dataToSave.WorkoutId).SingleOrDefault();
-                existingPr.IsAPersonalRecord = false;
+                if (existingPr != null)
+                {
+                    existingPr.IsAPersonalRecord = false;
+                }
+            }
+            else
+            {
+                // if user doesnt check the PR flag and they have no PR, make the first entry a PR
+                var userId = Int32.Parse(dataToSave.UserId);
+                var existingPr = dbSet.Where(it => it.IsAPersonalRecord == true && it.UserId == userId && it.WorkoutId == dataToSave.WorkoutId).SingleOrDefault();
+                if (existingPr == null) {
+                    dataToSave.IsAPersonalRecord = true;
+                }
             }
                 
 
@@ -32,6 +44,7 @@ namespace CrossfitBenchmarks.Data.Persistance
             this.dbSet.Add(logEntry);
             if (context.SaveChanges() > 0)
             {
+                dataToSave.DateCreated = logEntry.DateCreated.Value;
                 dataToSave.WorkoutLogId = logEntry.WorkoutLogId;
                 return dataToSave;
             }
