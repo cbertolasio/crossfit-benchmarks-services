@@ -59,7 +59,7 @@ namespace CrossfitBenchmarks.Data.Persistance
         {
         }
 
-        public IEnumerable<DataTransfer.WorkoutLogEntryDto> GetBenchmarkDataForUser(int userId)
+        public IEnumerable<DataTransfer.WorkoutLogEntryDto> GetBenchmarkDataForUser(int userId, string workoutTypeId)
         {
             var lastEntryQuery = from logItem in dbSet
                                                       where logItem.UserId == userId
@@ -78,7 +78,7 @@ namespace CrossfitBenchmarks.Data.Persistance
 
             var historyQuery = from wo in context.Set<Workout>()
                                                   join wol in dbSet on wo.WorkoutId equals wol.WorkoutId into woGroup
-                                                  where wo.WorkoutTypeId == "B"
+                                                  where wo.WorkoutTypeId == workoutTypeId
                                                   select new {
                                                       WorkoutName = wo.Name,
                                                       WorkoutId = wo.WorkoutId,

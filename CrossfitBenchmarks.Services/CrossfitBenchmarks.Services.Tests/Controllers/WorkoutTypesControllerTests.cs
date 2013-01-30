@@ -13,6 +13,7 @@ using CrossfitBenchmarks.Data;
 
 namespace CrossfitBenchmarks.Services.Tests.Controllers
 {
+
     [TestFixture]
     public class WorkoutTypesControllerTests
     {
@@ -20,7 +21,6 @@ namespace CrossfitBenchmarks.Services.Tests.Controllers
         public void Get_Calls_Repo()
         {
             workoutTypesRepo.Expect(it => it.GetAll()).Return(testData);
-            
             controller.Get();
 
             workoutTypesRepo.VerifyAllExpectations();

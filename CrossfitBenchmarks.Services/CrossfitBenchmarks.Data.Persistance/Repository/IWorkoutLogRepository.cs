@@ -11,7 +11,7 @@ namespace CrossfitBenchmarks.Data.Persistance
     public interface IWorkoutLogRepository : IRepository<WorkoutLog>
     {
         LogEntryDto Create(LogEntryDto dataToSave);
-        IEnumerable<WorkoutLogEntryDto> GetBenchmarkDataForUser(int userId);
+        IEnumerable<WorkoutLogEntryDto> GetBenchmarkDataForUser(int userId, string workoutTypeId);
     }
 }
 
