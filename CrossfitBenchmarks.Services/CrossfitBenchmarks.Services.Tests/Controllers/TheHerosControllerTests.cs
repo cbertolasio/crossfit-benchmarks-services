@@ -14,16 +14,14 @@ using CrossfitBenchmarks.Data.DataTransfer;
 
 namespace CrossfitBenchmarks.Services.Tests.Controllers
 {
-
     [TestFixture]
-    public class TheGirlsControllerTests
+    public class TheHerosControllerTests
     {
         [Test]
         public void Get_ReturnsData_From_Repo()
         {
-            var testData = new List<WorkoutLogEntryDto>();
-            repo.Expect(it => it.GetWorkoutLogEntries(Arg<int>.Is.GreaterThan(0), Arg<string>.Is.Equal("G"))).Return(testData);
-
+            var dataOut = new List<WorkoutLogEntryDto>();
+            repo.Expect(it => it.GetWorkoutLogEntries(Arg<int>.Is.GreaterThan(0), Arg<string>.Is.Equal("H"))).Return(dataOut);
             controller.Get(3);
 
             repo.VerifyAllExpectations();
@@ -33,13 +31,12 @@ namespace CrossfitBenchmarks.Services.Tests.Controllers
         public void Setup()
         {
             var kernel = new RhinoMocksMockingKernel();
-
-            controller = kernel.Get<TheGirlsController>();
+            controller = kernel.Get<TheHerosController>();
             repo = kernel.Get<IWorkoutLogRepository>();
         }
 
         private IWorkoutLogRepository repo;
-        private TheGirlsController controller;
+        private TheHerosController controller;
     }
 }
 

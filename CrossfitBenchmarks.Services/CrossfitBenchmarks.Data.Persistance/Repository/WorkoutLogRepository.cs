@@ -59,7 +59,7 @@ namespace CrossfitBenchmarks.Data.Persistance
         {
         }
 
-        public IEnumerable<DataTransfer.WorkoutLogEntryDto> GetBenchmarkDataForUser(int userId, string workoutTypeId)
+        public IEnumerable<DataTransfer.WorkoutLogEntryDto> GetWorkoutLogEntries(int userId, string workoutTypeId)
         {
             var lastEntryQuery = from logItem in dbSet
                                                       where logItem.UserId == userId

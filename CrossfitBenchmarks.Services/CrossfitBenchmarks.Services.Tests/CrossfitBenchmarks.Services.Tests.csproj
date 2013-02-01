@@ -68,6 +68,7 @@
     <Compile Include="Controllers\ITheGirlsRepository.cs" />
     <Compile Include="Controllers\LogEntryControllerTests.cs" />
     <Compile Include="Controllers\TheGirlsControllerTests.cs" />
+    <Compile Include="Controllers\TheHerosControllerTests.cs" />
     <Compile Include="Controllers\WorkoutTypesControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

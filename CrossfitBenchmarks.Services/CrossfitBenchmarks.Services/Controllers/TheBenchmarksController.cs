@@ -16,7 +16,7 @@ namespace CrossfitBenchmarks.Services.Controllers
         // GET api/thebenchmarks/5
         public IEnumerable<WorkoutLogEntryDto> Get(int id)
         {
-            return workoutLogRepo.GetBenchmarkDataForUser(id, WORKOUTTYPEID_B);
+            return workoutLogRepo.GetWorkoutLogEntries(id, WORKOUTTYPEID_B);
         }
 
 
