@@ -309,10 +309,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\WindowsAzure.Acs.Oauth2\src\WindowsAzure.Acs.Oauth2\WindowsAzure.Acs.Oauth2\WindowsAzure.Acs.Oauth2.csproj">
-      <Project>{3051f268-b03f-42ae-a06c-1d8dd751bdbf}</Project>
-      <Name>WindowsAzure.Acs.Oauth2</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CrossfitBenchmarks.Data.Persistance\CrossfitBenchmarks.Data.Persistance.csproj">
       <Project>{c9e4a31b-2ab9-4038-8ff9-b76a98c3cacf}</Project>
       <Name>CrossfitBenchmarks.Data.Persistance</Name>
@@ -320,6 +316,10 @@
     <ProjectReference Include="..\CrossfitBenchmarks.Data\CrossfitBenchmarks.Data.csproj">
       <Project>{5fa84051-4619-4b07-aa90-6770b4493c09}</Project>
       <Name>CrossfitBenchmarks.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsAzure.Acs.Oauth2\WindowsAzure.Acs.Oauth2.csproj">
+      <Project>{3051f268-b03f-42ae-a06c-1d8dd751bdbf}</Project>
+      <Name>WindowsAzure.Acs.Oauth2</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

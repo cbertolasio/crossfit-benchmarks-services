@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E49F34
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossfitBenchmarks.Services.Tests", "CrossfitBenchmarks.Services.Tests\CrossfitBenchmarks.Services.Tests.csproj", "{BDC889CD-6A22-4408-9DB3-476F92D82568}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsAzure.Acs.Oauth2", "..\..\WindowsAzure.Acs.Oauth2\src\WindowsAzure.Acs.Oauth2\WindowsAzure.Acs.Oauth2\WindowsAzure.Acs.Oauth2.csproj", "{3051F268-B03F-42AE-A06C-1D8DD751BDBF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsAzure.Acs.Oauth2", "WindowsAzure.Acs.Oauth2\WindowsAzure.Acs.Oauth2.csproj", "{3051F268-B03F-42AE-A06C-1D8DD751BDBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
