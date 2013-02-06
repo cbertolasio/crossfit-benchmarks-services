@@ -7,6 +7,7 @@ using CrossfitBenchmarks.Data.Persistance;
 
 namespace CrossfitBenchmarks.Services.Controllers
 {
+    [Authorize]
     public class TheBenchmarksController : ApiController
     {
         private const string WORKOUTTYPEID_B = "B";

@@ -9,6 +9,7 @@ using CrossfitBenchmarks.Data.Persistance;
 
 namespace CrossfitBenchmarks.Services.Controllers
 {
+    [Authorize]
     public class LogEntryController : ApiController
     {
         public LogEntryDto Put([FromBody] LogEntryDto dataToSave)

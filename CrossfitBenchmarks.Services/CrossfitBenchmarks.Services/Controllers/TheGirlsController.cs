@@ -9,6 +9,7 @@ using CrossfitBenchmarks.Data.Persistance;
 
 namespace CrossfitBenchmarks.Services.Controllers
 {
+    [Authorize]
     public class TheGirlsController : ApiController
     {
         private readonly IWorkoutLogRepository workoutLogRepo;

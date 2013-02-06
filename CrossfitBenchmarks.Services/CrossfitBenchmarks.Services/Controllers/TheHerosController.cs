@@ -8,6 +8,7 @@ using CrossfitBenchmarks.Data.Persistance;
 
 namespace CrossfitBenchmarks.Services.Controllers
 {
+    [Authorize]
     public class TheHerosController : ApiController
     {
         
