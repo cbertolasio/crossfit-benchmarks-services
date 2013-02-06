@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E49F34
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossfitBenchmarks.Services.Tests", "CrossfitBenchmarks.Services.Tests\CrossfitBenchmarks.Services.Tests.csproj", "{BDC889CD-6A22-4408-9DB3-476F92D82568}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsAzure.Acs.Oauth2", "WindowsAzure.Acs.Oauth2\WindowsAzure.Acs.Oauth2.csproj", "{3051F268-B03F-42AE-A06C-1D8DD751BDBF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,10 +38,6 @@ Global
 		{BDC889CD-6A22-4408-9DB3-476F92D82568}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDC889CD-6A22-4408-9DB3-476F92D82568}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDC889CD-6A22-4408-9DB3-476F92D82568}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3051F268-B03F-42AE-A06C-1D8DD751BDBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3051F268-B03F-42AE-A06C-1D8DD751BDBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3051F268-B03F-42AE-A06C-1D8DD751BDBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3051F268-B03F-42AE-A06C-1D8DD751BDBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
