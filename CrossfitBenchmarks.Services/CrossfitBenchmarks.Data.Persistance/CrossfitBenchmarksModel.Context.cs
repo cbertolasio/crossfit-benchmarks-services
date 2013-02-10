@@ -26,9 +26,9 @@ namespace CrossfitBenchmarks.Data.Persistance
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<User> Users { get; set; }
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<WorkoutLog> WorkoutLogs { get; set; }
         public DbSet<WorkoutType> WorkoutTypes { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

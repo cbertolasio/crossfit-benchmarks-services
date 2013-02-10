@@ -22,9 +22,11 @@ namespace CrossfitBenchmarks.Services.Tests.Controllers
         public void Get_ReturnsData_From_Repo()
         {
             var testData = new List<WorkoutLogEntryDto>();
+            var testUser = new UserInfoDto { UserId = 3 };
+            userRepo.Stub(it => it.GetUserInfo(Arg<string>.Is.Anything, Arg<string>.Is.Anything)).Return(testUser);
             repo.Expect(it => it.GetWorkoutLogEntries(Arg<int>.Is.GreaterThan(0), Arg<string>.Is.Equal("G"))).Return(testData);
 
-            controller.Get(3);
+            controller.Get("jbloggs", "facebook");
 
             repo.VerifyAllExpectations();
         }
@@ -36,9 +38,11 @@ namespace CrossfitBenchmarks.Services.Tests.Controllers
 
             controller = kernel.Get<TheGirlsController>();
             repo = kernel.Get<IWorkoutLogRepository>();
+            userRepo = kernel.Get<IUserRepository>();
         }
 
         private IWorkoutLogRepository repo;
+        private IUserRepository userRepo;
         private TheGirlsController controller;
     }
 }

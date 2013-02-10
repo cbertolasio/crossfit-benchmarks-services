@@ -5,13 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="fd747ca90fe946e595fd8decce037a17" Name="Diagram1" ZoomLevel="125">
-        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="2.75" PointY="3.875" />
         <EntityTypeShape EntityType="Model.Workout" Width="1.5" PointX="3" PointY="1.25" />
         <EntityTypeShape EntityType="Model.WorkoutLog" Width="1.5" PointX="5.25" PointY="1" />
         <EntityTypeShape EntityType="Model.WorkoutType" Width="1.5" PointX="0.75" PointY="1.375" />
-        <AssociationConnector Association="Model.FK_WorkoutLog_User" />
         <AssociationConnector Association="Model.FK_Workout_WorkoutType" />
         <AssociationConnector Association="Model.FK_WorkoutLog_Workout" />
+        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="7.125" PointY="4.5" />
+        <AssociationConnector Association="Model.FK_WorkoutLog_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

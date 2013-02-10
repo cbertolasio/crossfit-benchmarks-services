@@ -23,6 +23,7 @@ namespace CrossfitBenchmarks.Services.Modules
 
             Bind<IWorkoutTypesRepository>().To<WorkoutTypesRepository>();
             Bind<IWorkoutLogRepository>().To<WorkoutLogRepository>();
+            Bind<IUserRepository>().To<UserRepository>();
         }
 
         public DataAccessModule()

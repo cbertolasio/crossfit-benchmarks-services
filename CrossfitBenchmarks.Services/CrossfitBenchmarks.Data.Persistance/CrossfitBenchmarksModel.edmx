@@ -112,14 +112,9 @@
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CrossfitBenchmarksEntities1" p1:LazyLoadingEnabled="false">
-          <EntitySet Name="Users" EntityType="Model.User" />
           <EntitySet Name="Workouts" EntityType="Model.Workout" />
           <EntitySet Name="WorkoutLogs" EntityType="Model.WorkoutLog" />
           <EntitySet Name="WorkoutTypes" EntityType="Model.WorkoutType" />
-          <AssociationSet Name="FK_WorkoutLog_User" Association="Model.FK_WorkoutLog_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="WorkoutLog" EntitySet="WorkoutLogs" />
-          </AssociationSet>
           <AssociationSet Name="FK_Workout_WorkoutType" Association="Model.FK_Workout_WorkoutType">
             <End Role="WorkoutType" EntitySet="WorkoutTypes" />
             <End Role="Workout" EntitySet="Workouts" />
@@ -128,25 +123,12 @@
             <End Role="Workout" EntitySet="Workouts" />
             <End Role="WorkoutLog" EntitySet="WorkoutLogs" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="Model.User" />
+          <AssociationSet Name="FK_WorkoutLog_User" Association="Model.FK_WorkoutLog_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="WorkoutLog" EntitySet="WorkoutLogs" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Type="Int32" Name="UserId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="LastName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="TimeZoneOffset" Nullable="false" />
-          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="IpName" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="IpNameIdentifier" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="IpEmail" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="IdentityProvider" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="PromoCode" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="DateCreated" Precision="7" />
-          <Property Type="DateTime" Name="LastActivityDate" Precision="7" />
-          <NavigationProperty Name="WorkoutLogs" Relationship="Model.FK_WorkoutLog_User" FromRole="User" ToRole="WorkoutLog" />
-        </EntityType>
         <EntityType Name="Workout">
           <Key>
             <PropertyRef Name="WorkoutId" />
@@ -167,9 +149,9 @@
           <Property Type="String" Name="Score" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="DateTimeOffset" Name="DateCreated" Precision="7" />
           <Property Type="Boolean" Name="IsAPersonalRecord" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="Model.FK_WorkoutLog_User" FromRole="WorkoutLog" ToRole="User" />
           <NavigationProperty Name="Workout" Relationship="Model.FK_WorkoutLog_Workout" FromRole="WorkoutLog" ToRole="Workout" />
           <Property Type="String" Name="Note" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Model.FK_WorkoutLog_User" FromRole="WorkoutLog" ToRole="User" />
         </EntityType>
         <EntityType Name="WorkoutType">
           <Key>
@@ -179,20 +161,6 @@
           <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Workouts" Relationship="Model.FK_Workout_WorkoutType" FromRole="WorkoutType" ToRole="Workout" />
         </EntityType>
-        <Association Name="FK_WorkoutLog_User">
-          <End Type="Model.User" Role="User" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="Model.WorkoutLog" Role="WorkoutLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="WorkoutLog">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Workout_WorkoutType">
           <End Type="Model.WorkoutType" Role="WorkoutType" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -219,30 +187,44 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="Int32" Name="UserId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="TimeZoneOffset" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IpName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IpNameIdentifier" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="IpEmail" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IdentityProvider" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PromoCode" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="DateCreated" Precision="7" />
+          <Property Type="DateTime" Name="LastActivityDate" Precision="7" />
+          <NavigationProperty Name="WorkoutLogs" Relationship="Model.FK_WorkoutLog_User" FromRole="User" ToRole="WorkoutLog" />
+        </EntityType>
+        <Association Name="FK_WorkoutLog_User">
+          <End Type="Model.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.WorkoutLog" Role="WorkoutLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="WorkoutLog">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="CrossfitBenchmarksEntities1">
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="Model.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
-                <ScalarProperty Name="IdentityProvider" ColumnName="IdentityProvider" />
-                <ScalarProperty Name="IpEmail" ColumnName="IpEmail" />
-                <ScalarProperty Name="IpNameIdentifier" ColumnName="IpNameIdentifier" />
-                <ScalarProperty Name="IpName" ColumnName="IpName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="TimeZoneOffset" ColumnName="TimeZoneOffset" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Workouts">
             <EntityTypeMapping TypeName="Model.Workout">
               <MappingFragment StoreEntitySet="Workout">
@@ -270,6 +252,24 @@
               <MappingFragment StoreEntitySet="WorkoutType">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="WorkoutTypeId" ColumnName="WorkoutTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
+                <ScalarProperty Name="IdentityProvider" ColumnName="IdentityProvider" />
+                <ScalarProperty Name="IpEmail" ColumnName="IpEmail" />
+                <ScalarProperty Name="IpNameIdentifier" ColumnName="IpNameIdentifier" />
+                <ScalarProperty Name="IpName" ColumnName="IpName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TimeZoneOffset" ColumnName="TimeZoneOffset" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

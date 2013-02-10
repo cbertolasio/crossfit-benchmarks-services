@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Web.Http;
 using CrossfitBenchmarks.Data.DataTransfer;
@@ -11,17 +13,25 @@ namespace CrossfitBenchmarks.Services.Controllers
     [Authorize]
     public class TheHerosController : ApiController
     {
-        
-        public IEnumerable<WorkoutLogEntryDto> Get(int id)
+        public IEnumerable<WorkoutLogEntryDto> Get( string nameIdentifier,  string identityProvider)
         {
-            return workoutLogRepo.GetWorkoutLogEntries(id, "H");
+            var userInfo = userRepository.GetUserInfo(nameIdentifier, identityProvider);
+            if (userInfo == null)
+            {
+                var resp = new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent(string.Format("No User was found for nameIdentifier '{0}' and identityProvider '{1}'", nameIdentifier, identityProvider)), ReasonPhrase = "User Not Found" };
+                throw new HttpResponseException(resp);
+            }
+
+            return workoutLogRepo.GetWorkoutLogEntries(userInfo.UserId, "H");
         }
 
-        public TheHerosController(IWorkoutLogRepository workoutLogRepo)
+        public TheHerosController(IWorkoutLogRepository workoutLogRepo, IUserRepository userRepository)
         {
+            this.userRepository = userRepository;
             this.workoutLogRepo = workoutLogRepo;
         }
 
+        private readonly IUserRepository userRepository;
         private readonly IWorkoutLogRepository workoutLogRepo;
     }
 }

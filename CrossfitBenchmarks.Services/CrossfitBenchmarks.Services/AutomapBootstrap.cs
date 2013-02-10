@@ -16,6 +16,12 @@ namespace CrossfitBenchmarks.Services
         public static void Initialize()
         {
             AutoMapper.Mapper.CreateMap<Entities.WorkoutType, Dto.WorkoutTypeDto>();
+
+            AutoMapper.Mapper.CreateMap<Entities.User, Dto.UserInfoDto>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.IpEmail))
+                .ForMember(dest => dest.IdentityProvider, opt => opt.MapFrom(src => src.IdentityProvider))
+                .ForMember(dest => dest.NameIdentifier, opt => opt.MapFrom(src => src.IpNameIdentifier));
         }
     }
 }
