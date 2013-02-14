@@ -12,7 +12,7 @@ namespace CrossfitBenchmarks.Services.Controllers
     [Authorize]
     public class LogEntryController : ApiController
     {
-        public LogEntryDto Put([FromBody] LogEntryDto dataToSave)
+        public WorkoutLogEntryDto Put([FromBody] LogEntryDto dataToSave)
         {
             var userInfo = userRepository.GetUserInfo(dataToSave.UserInfo.NameIdentifier, dataToSave.UserInfo.IdentityProvider);
             if (userInfo == null)
@@ -22,7 +22,10 @@ namespace CrossfitBenchmarks.Services.Controllers
             }
 
             dataToSave.UserId = userInfo.UserId.ToString();
-            return workoutLogRepo.Create(dataToSave);
+            dataToSave.UserInfo = userInfo;
+            var dataAfterSave = workoutLogRepo.Create(dataToSave);
+
+            return workoutLogRepo.GetSingleWorkoutLogEntry(dataAfterSave);
         }
 
         public  LogEntryController(IWorkoutLogRepository workoutLogRepo, IUserRepository userRepository)

@@ -19,9 +19,22 @@ namespace CrossfitBenchmarks.Services.Tests.Controllers
     public class LogEntryControllerTests
     {
         [Test]
+        public void Put_Calls_GetSingleWorkoutLogEntry_OnRepo()
+        {
+            var dataOut = new WorkoutLogEntryDto();
+            var logEntryOut = new LogEntryDto { UserInfo = dataIn.UserInfo } ;
+
+            workoutLogRepo.Stub(it => it.Create(Arg<LogEntryDto>.Is.NotNull)).Return(logEntryOut);
+            userRepo.Stub(it => it.GetUserInfo(Arg<string>.Is.Anything, Arg<string>.Is.Anything)).Return(testUser);
+
+            workoutLogRepo.Expect(it => it.GetSingleWorkoutLogEntry(Arg<LogEntryDto>.Is.NotNull)).Return(dataOut);
+            controller.Put(dataIn);
+            workoutLogRepo.VerifyAllExpectations();
+        }
+
+        [Test]
         public void Put_Calls_Create_OnRepo()
         {
-            var testUser = new UserInfoDto { UserId = 3  };
             workoutLogRepo.Expect(it => it.Create(Arg<LogEntryDto>.Is.NotNull)).Return(dataOut);
             userRepo.Stub(it => it.GetUserInfo(Arg<string>.Is.Anything, Arg<string>.Is.Anything)).Return(testUser);
 
@@ -44,6 +57,7 @@ namespace CrossfitBenchmarks.Services.Tests.Controllers
         private LogEntryController controller;
         private LogEntryDto dataIn = new LogEntryDto();
         private LogEntryDto dataOut = new LogEntryDto();
+        private UserInfoDto testUser = new UserInfoDto { UserId = 3 };
         private IWorkoutLogRepository workoutLogRepo;
         private IUserRepository userRepo;
     }

@@ -27,11 +27,11 @@ namespace CrossfitBenchmarks.Data.Persistance
                 // if user doesnt check the PR flag and they have no PR, make the first entry a PR
                 var userId = Int32.Parse(dataToSave.UserId);
                 var existingPr = dbSet.Where(it => it.IsAPersonalRecord == true && it.UserId == userId && it.WorkoutId == dataToSave.WorkoutId).SingleOrDefault();
-                if (existingPr == null) {
+                if (existingPr == null)
+                {
                     dataToSave.IsAPersonalRecord = true;
                 }
             }
-                
 
             WorkoutLog logEntry = new WorkoutLog();
             logEntry.DateCreated = DateTimeOffset.Parse(dataToSave.DateCreatedAsString);
@@ -59,34 +59,74 @@ namespace CrossfitBenchmarks.Data.Persistance
         {
         }
 
-        public IEnumerable<DataTransfer.WorkoutLogEntryDto> GetWorkoutLogEntries(int userId, string workoutTypeId)
+        public WorkoutLogEntryDto GetSingleWorkoutLogEntry(LogEntryDto logEntry)
         {
-            var lastEntryQuery = from logItem in dbSet
-                                                      where logItem.UserId == userId
-                                                      group logItem by new { logItem.WorkoutId, logItem.UserId }
-                                  into grp
-                                                      orderby grp.Key
-                                                      select new { WorkoutId = grp.Key.WorkoutId, UserId = grp.Key.UserId, Info = grp.OrderByDescending(gt => gt.DateCreated).FirstOrDefault() };
+            var lastWorkoutEntryQuery = from logItem in dbSet 
+                                        where logItem.UserId == logEntry.UserInfo.UserId && logItem.WorkoutId == logEntry.WorkoutId
+                                        group logItem by new { logItem.WorkoutId, logItem.UserId } into grp orderby grp.Key
+                                        select new { WorkoutId = grp.Key.WorkoutId, UserId = grp.Key.UserId, Info = grp.OrderByDescending(gt => gt.DateCreated).ThenByDescending(gt => gt.WorkoutLogId).FirstOrDefault() };
 
-            var lastPrQuery = from logItem in dbSet
-                                                where logItem.UserId == userId && logItem.IsAPersonalRecord
-                                                group logItem by new { logItem.WorkoutId, logItem.UserId }
-                               into grp
-                                                orderby grp.Key
-                                                select new { WorkoutId = grp.Key.WorkoutId, UserId = grp.Key.UserId, Info = grp.OrderByDescending(gt => gt.DateCreated).FirstOrDefault() };
+            var lastWorkoutPrQuery = from logItem in dbSet 
+                                     where logItem.UserId == logEntry.UserInfo.UserId && logItem.IsAPersonalRecord && logItem.WorkoutId == logEntry.WorkoutId
+                                     group logItem by new { logItem.WorkoutId, logItem.UserId } into grp orderby grp.Key
+                                     select new { WorkoutId = grp.Key.WorkoutId, UserId = grp.Key.UserId, Info = grp.OrderByDescending(gt => gt.DateCreated).ThenByDescending(gt => gt.WorkoutLogId).FirstOrDefault() };
 
 
             var historyQuery = from wo in context.Set<Workout>()
-                                                  join wol in dbSet on wo.WorkoutId equals wol.WorkoutId into woGroup
-                                                  where wo.WorkoutTypeId == workoutTypeId
-                                                  select new {
-                                                      WorkoutName = wo.Name,
-                                                      WorkoutId = wo.WorkoutId,
-                                                      LastEntry = lastEntryQuery.Where(it => it.WorkoutId == wo.WorkoutId)
-                                                          .Select(le => new { WorkoutLogId = le.Info.WorkoutLogId, DateCreated = le.Info.DateCreated, Score = le.Info.Score, IsAPersonalRecord = le.Info.IsAPersonalRecord }).FirstOrDefault(),
-                                                      LastPrEntry = lastPrQuery.Where(it => it.WorkoutId == wo.WorkoutId)
-                                                          .Select(pr => new { WorkoutLogId = pr.Info.WorkoutLogId, DateCreated = pr.Info.DateCreated, Score = pr.Info.Score, IsAPersonalRecord = pr.Info.IsAPersonalRecord }).FirstOrDefault()
-                                                  };
+                               join wol in dbSet on wo.WorkoutId equals wol.WorkoutId into woGroup
+                               where wo.WorkoutId == logEntry.WorkoutId 
+                               select new { WorkoutName = wo.Name,WorkoutId = wo.WorkoutId, 
+                                   LastEntry = lastWorkoutEntryQuery.Where(it => it.WorkoutId == wo.WorkoutId).Select(le => new { WorkoutLogId = le.Info.WorkoutLogId, DateCreated = le.Info.DateCreated, Score = le.Info.Score, IsAPersonalRecord = le.Info.IsAPersonalRecord }).FirstOrDefault(), 
+                                   LastPrEntry = lastWorkoutPrQuery.Where(it => it.WorkoutId == wo.WorkoutId)                                                                                                                                                                                               .Select(pr => new { WorkoutLogId = pr.Info.WorkoutLogId, DateCreated = pr.Info.DateCreated, Score = pr.Info.Score, IsAPersonalRecord = pr.Info.IsAPersonalRecord }).FirstOrDefault() };
+            
+            var historyItem = historyQuery.SingleOrDefault();
+            var workoutEntry = new WorkoutLogEntryDto() {
+                    WorkoutName = historyItem.WorkoutName,
+                    WorkoutId = historyItem.WorkoutId
+                };
+
+            if (historyItem.LastEntry != null)
+            {
+                workoutEntry.LastEntry = new LogEntryDto {
+                        DateCreated = historyItem.LastEntry.DateCreated.Value,
+                        IsAPersonalRecord = historyItem.LastEntry.IsAPersonalRecord,
+                        Score = historyItem.LastEntry.Score,
+                        WorkoutLogId = historyItem.LastEntry.WorkoutLogId
+                    };
+            }
+
+            if (historyItem.LastPrEntry != null)
+            {
+                workoutEntry.LastPersonalRecord = new LogEntryDto {
+                        DateCreated = historyItem.LastPrEntry.DateCreated.Value,
+                        IsAPersonalRecord = historyItem.LastPrEntry.IsAPersonalRecord,
+                        Score = historyItem.LastPrEntry.Score,
+                        WorkoutLogId = historyItem.LastPrEntry.WorkoutLogId
+                    };
+            }
+
+            return workoutEntry;
+        }
+
+        public IEnumerable<DataTransfer.WorkoutLogEntryDto> GetWorkoutLogEntries(int userId, string workoutTypeId)
+        {
+            var lastEntryQuery = from logItem in dbSet
+                                 where logItem.UserId == userId
+                                 group logItem by new { logItem.WorkoutId, logItem.UserId } into grp orderby grp.Key
+                                 select new { WorkoutId = grp.Key.WorkoutId, UserId = grp.Key.UserId, Info = grp.OrderByDescending(gt => gt.DateCreated).ThenByDescending(gt => gt.WorkoutLogId).FirstOrDefault() };
+
+            var lastPrQuery = from logItem in dbSet
+                              where logItem.UserId == userId && logItem.IsAPersonalRecord
+                              group logItem by new { logItem.WorkoutId, logItem.UserId } into grp orderby grp.Key
+                              select new { WorkoutId = grp.Key.WorkoutId, UserId = grp.Key.UserId, Info = grp.OrderByDescending(gt => gt.DateCreated).ThenByDescending(gt => gt.WorkoutLogId).FirstOrDefault() };
+
+
+            var historyQuery = from wo in context.Set<Workout>()
+                               join wol in dbSet on wo.WorkoutId equals wol.WorkoutId into woGroup
+                               where wo.WorkoutTypeId == workoutTypeId
+                               select new { WorkoutName = wo.Name, WorkoutId = wo.WorkoutId, 
+                                   LastEntry = lastEntryQuery.Where(it => it.WorkoutId == wo.WorkoutId).Select(le => new { WorkoutLogId = le.Info.WorkoutLogId, DateCreated = le.Info.DateCreated, Score = le.Info.Score, IsAPersonalRecord = le.Info.IsAPersonalRecord }).FirstOrDefault(), 
+                                   LastPrEntry = lastPrQuery.Where(it => it.WorkoutId == wo.WorkoutId).Select(pr => new { WorkoutLogId = pr.Info.WorkoutLogId, DateCreated = pr.Info.DateCreated, Score = pr.Info.Score, IsAPersonalRecord = pr.Info.IsAPersonalRecord }).FirstOrDefault() };
 
 
             var result = new List<WorkoutLogEntryDto>();
