@@ -56,9 +56,10 @@
           <Property Name="WorkoutId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Score" Type="nvarchar" MaxLength="50" />
-          <Property Name="DateCreated" Type="datetimeoffset" />
+          <Property Name="DateOfWod" Type="datetimeoffset" />
           <Property Name="IsAPersonalRecord" Type="bit" Nullable="false" />
           <Property Name="Note" Type="nvarchar" MaxLength="1024" />
+          <Property Name="DateCreated" Type="datetimeoffset" />
         </EntityType>
         <EntityType Name="WorkoutType">
           <Key>
@@ -152,6 +153,7 @@
           <NavigationProperty Name="Workout" Relationship="Model.FK_WorkoutLog_Workout" FromRole="WorkoutLog" ToRole="Workout" />
           <Property Type="String" Name="Note" MaxLength="1024" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="User" Relationship="Model.FK_WorkoutLog_User" FromRole="WorkoutLog" ToRole="User" />
+          <Property Type="DateTimeOffset" Name="DateOfWod" Precision="7" />
         </EntityType>
         <EntityType Name="WorkoutType">
           <Key>
@@ -237,6 +239,7 @@
           <EntitySetMapping Name="WorkoutLogs">
             <EntityTypeMapping TypeName="Model.WorkoutLog">
               <MappingFragment StoreEntitySet="WorkoutLog">
+                <ScalarProperty Name="DateOfWod" ColumnName="DateOfWod" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="IsAPersonalRecord" ColumnName="IsAPersonalRecord" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
