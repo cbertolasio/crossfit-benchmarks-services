@@ -11,6 +11,7 @@ using Rhino.Mocks;
 using CrossfitBenchmarks.Services.Controllers;
 using CrossfitBenchmarks.Data;
 using CrossfitBenchmarks.Data.DataTransfer;
+using System.Web.Http;
 
 namespace CrossfitBenchmarks.Services.Tests.Controllers
 {
@@ -41,6 +42,14 @@ namespace CrossfitBenchmarks.Services.Tests.Controllers
             controller.Put(dataIn);
 
             workoutLogRepo.VerifyAllExpectations();
+        }
+
+        [TestCase(ExpectedException=typeof(HttpResponseException))]
+        public void Put_Throws_Exception_When_UserInfo_IsNull()
+        {
+            userRepo.Stub(it => it.GetUserInfo(Arg<string>.Is.Anything, Arg<string>.Is.Anything)).Return(null);
+
+            controller.Put(dataIn);
         }
 
         [SetUp]
