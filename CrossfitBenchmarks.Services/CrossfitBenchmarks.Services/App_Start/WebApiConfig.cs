@@ -1,7 +1,11 @@
-﻿using System;
+﻿using CrossfitBenchmarks.Data.DataTransfer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.OData.Builder;
+using CrossfitBenchmarks.Data;
+using CrossfitBenchmarks.Services.Controllers.OData;
 
 namespace CrossfitBenchmarks.Services
 {
@@ -14,6 +18,16 @@ namespace CrossfitBenchmarks.Services
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            ODataModelBuilder modelBuilder = new ODataConventionModelBuilder();
+            //var workoutLogs = modelBuilder.EntitySet<WorkoutLog>("WorkoutLogs");
+            //modelBuilder.EntitySet<User>("Users");
+            //modelBuilder.EntitySet<WorkoutType>("WorkoutTypes");
+            //modelBuilder.EntitySet<Workout>("Workouts");
+            modelBuilder.EntitySet<WorkoutLogSummary>("WorkoutLogs");
+
+            Microsoft.Data.Edm.IEdmModel model = modelBuilder.GetEdmModel();
+            config.Routes.MapODataRoute("ODataRoute", "odata", model);
         }
     }
 }
