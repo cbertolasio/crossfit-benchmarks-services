@@ -21,8 +21,9 @@ namespace CrossfitBenchmarks.Data
         public Nullable<System.DateTimeOffset> DateCreated { get; set; }
         public bool IsAPersonalRecord { get; set; }
         public string Note { get; set; }
+        public Nullable<System.DateTimeOffset> DateOfWod { get; set; }
     
-        public virtual User User { get; set; }
         public virtual Workout Workout { get; set; }
+        public virtual User User { get; set; }
     }
 }
