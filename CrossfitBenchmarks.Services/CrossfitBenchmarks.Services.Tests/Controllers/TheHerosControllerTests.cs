@@ -15,7 +15,7 @@ using CrossfitBenchmarks.Data.DataTransfer;
 namespace CrossfitBenchmarks.Services.Tests.Controllers
 {
     [TestFixture]
-    public class TheHerosControllerTests
+    public class TheHeroesControllerTests
     {
         [Test]
         public void Get_ReturnsData_From_Repo()
@@ -33,14 +33,14 @@ namespace CrossfitBenchmarks.Services.Tests.Controllers
         public void Setup()
         {
             var kernel = new RhinoMocksMockingKernel();
-            controller = kernel.Get<TheHerosController>();
+            controller = kernel.Get<TheHeroesController>();
             repo = kernel.Get<IWorkoutLogRepository>();
             
             userRepo = kernel.Get<IUserRepository>();
         }
 
         private IWorkoutLogRepository repo;
-        private TheHerosController controller;
+        private TheHeroesController controller;
         private IUserRepository userRepo;
     }
 }
