@@ -7,6 +7,8 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using CrossfitBenchmarks.Data;
 using CrossfitBenchmarks.Data.Persistance;
+using CrossfitBenchmarks.Services.Utility;
+using System.Web.Http.OData.Query;
 
 namespace CrossfitBenchmarks.Services.Controllers.OData
 {
@@ -16,7 +18,9 @@ namespace CrossfitBenchmarks.Services.Controllers.OData
         private readonly DbContext context;
         private DbSet<WorkoutLog> workoutLogs;
 
-        [Queryable(PageSize = 5)]
+        [Queryable(PageSize = 5, AllowedQueryOptions = AllowedQueryOptions.Top | AllowedQueryOptions.Skip | 
+            AllowedQueryOptions.Filter | AllowedQueryOptions.InlineCount | AllowedQueryOptions.OrderBy, MaxTop=5 )]
+        [NoCache]
         public override IQueryable<WorkoutLogSummary> Get()
         {
            return workoutLogs.Select(it => new WorkoutLogSummary { Notes = it.Note,
