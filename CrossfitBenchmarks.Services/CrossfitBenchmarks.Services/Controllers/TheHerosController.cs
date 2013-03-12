@@ -11,7 +11,7 @@ using CrossfitBenchmarks.Data.Persistance;
 namespace CrossfitBenchmarks.Services.Controllers
 {
     [Authorize]
-    public class TheHerosController : ApiController
+    public class TheHeroesController : ApiController
     {
         public IEnumerable<WorkoutLogEntryDto> Get( string nameIdentifier,  string identityProvider)
         {
@@ -25,7 +25,7 @@ namespace CrossfitBenchmarks.Services.Controllers
             return workoutLogRepo.GetWorkoutLogEntries(userInfo.UserId, "H");
         }
 
-        public TheHerosController(IWorkoutLogRepository workoutLogRepo, IUserRepository userRepository)
+        public TheHeroesController(IWorkoutLogRepository workoutLogRepo, IUserRepository userRepository)
         {
             this.userRepository = userRepository;
             this.workoutLogRepo = workoutLogRepo;
