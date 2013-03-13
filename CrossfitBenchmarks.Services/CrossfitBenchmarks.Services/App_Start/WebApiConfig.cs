@@ -6,6 +6,9 @@ using System.Web.Http;
 using System.Web.Http.OData.Builder;
 using CrossfitBenchmarks.Data;
 using CrossfitBenchmarks.Services.Controllers.OData;
+using Newtonsoft.Json;
+using System.Net.Http.Formatting;
+using Newtonsoft.Json.Converters;
 
 namespace CrossfitBenchmarks.Services
 {
@@ -19,6 +22,17 @@ namespace CrossfitBenchmarks.Services
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            JsonMediaTypeFormatter jsonFormatter = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            JsonSerializerSettings jSettings = new Newtonsoft.Json.JsonSerializerSettings() {
+                Formatting = Formatting.Indented,
+                DateTimeZoneHandling = DateTimeZoneHandling.RoundtripKind,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DateParseHandling = DateParseHandling.DateTimeOffset
+            };
+
+            jSettings.Converters.Add(new MyDateTimeConvertor());
+            jsonFormatter.SerializerSettings = jSettings;
+
             ODataModelBuilder modelBuilder = new ODataConventionModelBuilder();
             //var workoutLogs = modelBuilder.EntitySet<WorkoutLog>("WorkoutLogs");
             //modelBuilder.EntitySet<User>("Users");
@@ -28,6 +42,19 @@ namespace CrossfitBenchmarks.Services
 
             Microsoft.Data.Edm.IEdmModel model = modelBuilder.GetEdmModel();
             config.Routes.MapODataRoute("ODataRoute", "odata", model);
+        }
+    }
+
+    public class MyDateTimeConvertor : DateTimeConverterBase
+    {
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            return DateTimeOffset.Parse(reader.Value.ToString());
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            writer.WriteValue(((DateTimeOffset)value).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'sszzz"));
         }
     }
 }
