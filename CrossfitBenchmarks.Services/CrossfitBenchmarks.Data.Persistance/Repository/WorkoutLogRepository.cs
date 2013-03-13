@@ -65,12 +65,14 @@ namespace CrossfitBenchmarks.Data.Persistance
             var lastWorkoutEntryQuery = from logItem in dbSet 
                                         where logItem.UserId == logEntry.UserInfo.UserId && logItem.WorkoutId == logEntry.WorkoutId
                                         group logItem by new { logItem.WorkoutId, logItem.UserId } into grp orderby grp.Key
-                                        select new { WorkoutId = grp.Key.WorkoutId, UserId = grp.Key.UserId, Info = grp.OrderByDescending(gt => gt.DateOfWod).ThenByDescending(gt => gt.WorkoutLogId).FirstOrDefault() };
+                                        select new { WorkoutId = grp.Key.WorkoutId, UserId = grp.Key.UserId, 
+                                            Info = grp.OrderByDescending(gt => gt.DateOfWod).ThenByDescending(gt => gt.WorkoutLogId).FirstOrDefault() };
 
             var lastWorkoutPrQuery = from logItem in dbSet 
                                      where logItem.UserId == logEntry.UserInfo.UserId && logItem.IsAPersonalRecord && logItem.WorkoutId == logEntry.WorkoutId
                                      group logItem by new { logItem.WorkoutId, logItem.UserId } into grp orderby grp.Key
-                                     select new { WorkoutId = grp.Key.WorkoutId, UserId = grp.Key.UserId, Info = grp.OrderByDescending(gt => gt.DateOfWod).ThenByDescending(gt => gt.WorkoutLogId).FirstOrDefault() };
+                                     select new { WorkoutId = grp.Key.WorkoutId, UserId = grp.Key.UserId, 
+                                         Info = grp.OrderByDescending(gt => gt.DateOfWod).ThenByDescending(gt => gt.WorkoutLogId).FirstOrDefault() };
 
 
             var historyQuery = from wo in context.Set<Workout>()
