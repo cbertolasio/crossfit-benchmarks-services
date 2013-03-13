@@ -25,7 +25,7 @@ namespace CrossfitBenchmarks.Services
             JsonMediaTypeFormatter jsonFormatter = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             JsonSerializerSettings jSettings = new Newtonsoft.Json.JsonSerializerSettings() {
                 Formatting = Formatting.Indented,
-                DateTimeZoneHandling = DateTimeZoneHandling.Local,
+                DateTimeZoneHandling = DateTimeZoneHandling.RoundtripKind,
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
                 DateParseHandling = DateParseHandling.DateTimeOffset
             };
