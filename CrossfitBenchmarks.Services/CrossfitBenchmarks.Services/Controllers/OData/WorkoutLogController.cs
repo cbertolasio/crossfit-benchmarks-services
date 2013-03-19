@@ -18,8 +18,8 @@ namespace CrossfitBenchmarks.Services.Controllers.OData
         private readonly DbContext context;
         private DbSet<WorkoutLog> workoutLogs;
 
-        [Queryable(PageSize = 5, AllowedQueryOptions = AllowedQueryOptions.Top | AllowedQueryOptions.Skip | 
-            AllowedQueryOptions.Filter | AllowedQueryOptions.InlineCount | AllowedQueryOptions.OrderBy, MaxTop=5 )]
+        [Queryable(AllowedQueryOptions = AllowedQueryOptions.Top | AllowedQueryOptions.Skip | 
+            AllowedQueryOptions.Filter | AllowedQueryOptions.InlineCount | AllowedQueryOptions.OrderBy, MaxTop=25 )]
         [NoCache]
         public override IQueryable<WorkoutLogSummary> Get()
         {
@@ -32,6 +32,7 @@ namespace CrossfitBenchmarks.Services.Controllers.OData
                 WorkoutName = it.Workout.Name,
                 WorkoutType = it.Workout.WorkoutType.Name,
                 WorkoutTypeId = it.Workout.WorkoutTypeId,
+                WorkoutId = it.WorkoutId,
                 Score = it.Score,
                 IsAPersonalRecord = it.IsAPersonalRecord
             });

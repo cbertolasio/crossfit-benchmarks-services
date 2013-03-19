@@ -19,6 +19,7 @@ namespace CrossfitBenchmarks.Services.Controllers.OData
         public string Score { get; set; }
         public int UserId { get; set; }
         public string UserNameIdentifier { get; set; }
+        public int WorkoutId { get; set; }
         [Key]
         public long WorkoutLogId { get; set; }
         public string WorkoutName { get; set; }
