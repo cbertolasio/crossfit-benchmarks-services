@@ -37,7 +37,7 @@ namespace CrossfitBenchmarks.Data.Persistance
             logEntry.DateOfWod = DateTimeOffset.Parse(dataToSave.DateOfWodAsString);
             logEntry.DateCreated = DateTimeOffset.Now;
             logEntry.IsAPersonalRecord = dataToSave.IsAPersonalRecord;
-            logEntry.Score = dataToSave.Score;
+            logEntry.Score = dataToSave.Score ?? "(Unspecified)";
             logEntry.UserId = Int32.Parse(dataToSave.UserId);
             logEntry.WorkoutId = dataToSave.WorkoutId;
             logEntry.Note = dataToSave.Note;
