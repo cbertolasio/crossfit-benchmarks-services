@@ -28,6 +28,11 @@ namespace CrossfitBenchmarks.Services.Controllers
             return workoutLogRepo.GetSingleWorkoutLogEntry(dataAfterSave);
         }
 
+        public bool Delete(int id, string ip, string nid)
+        {
+            return workoutLogRepo.Delete(id, ip, nid);
+        }
+
         public  LogEntryController(IWorkoutLogRepository workoutLogRepo, IUserRepository userRepository)
         {
             this.userRepository = userRepository;
@@ -37,6 +42,19 @@ namespace CrossfitBenchmarks.Services.Controllers
 
         private readonly IUserRepository userRepository;
         private readonly IWorkoutLogRepository workoutLogRepo;
+    }
+
+
+    public class DeleteLogEntry
+    {
+        public int id { get; set; }
+        public string nid { get; set; }
+        public string ip { get; set; }
+
+        public  DeleteLogEntry()
+        {
+            
+        }
     }
 }
 
