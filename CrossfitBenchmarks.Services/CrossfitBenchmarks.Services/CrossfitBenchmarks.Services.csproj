@@ -213,6 +213,7 @@
     <Compile Include="Controllers\TheGirlsController.cs" />
     <Compile Include="Controllers\TheHerosController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\WorkoutLogEntriesController.cs" />
     <Compile Include="Controllers\WorkoutTypesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -11,7 +11,7 @@ namespace CrossfitBenchmarks.Data.Persistance
     public interface IWorkoutLogRepository : IRepository<WorkoutLog>
     {
         bool Delete(int id, string identityProvider, string nameIdentifier);
-
+        bool DeleteAll(int id, string identityProvider, string nameIdentifier);
         WorkoutLogEntryDto GetSingleWorkoutLogEntry(LogEntryDto logEntry);
 
         LogEntryDto Create(LogEntryDto dataToSave);
